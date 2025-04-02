@@ -18,24 +18,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 	scheme = "bearer",
 	in = SecuritySchemeIn.HEADER,
 	flows = @OAuthFlows(
-		authorizationCode = @OAuthFlow(
-			authorizationUrl = "http://localhost:9090/realms/car_rental/protocol/openid-connect/auth",
-			tokenUrl = "http://localhost:9090/realms/car_rental/protocol/openid-connect/token",
-			scopes = {
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "openid", description = "OpenID Connect scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "profile", description = "Profile scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "email", description = "Email scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "roles", description = "Roles scope")
-			}
-		),
 		password = @OAuthFlow(
-			tokenUrl = "http://localhost:9090/realms/car_rental/protocol/openid-connect/token",
-			scopes = {
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "openid", description = "OpenID Connect scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "profile", description = "Profile scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "email", description = "Email scope"),
-				@io.swagger.v3.oas.annotations.security.OAuthScope(name = "roles", description = "Roles scope")
-			}
+			authorizationUrl = "http://localhost:9090/realms/car_rental/protocol/openid-connect/auth",
+			tokenUrl = "http://localhost:9090/realms/car_rental/protocol/openid-connect/token"
 		)
 	)
 )

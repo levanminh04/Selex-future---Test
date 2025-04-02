@@ -40,8 +40,8 @@ public class CarController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCar(@RequestBody Car car) {
-        carService.createCar(car);
+    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+        return ResponseEntity.ok(carService.createCar(car));
     }
 
     @PutMapping("/{id}")

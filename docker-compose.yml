@@ -5,10 +5,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: car_rental
+    volumes:
+      - car_rental_mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
     networks:
       - car-rental-network
     restart: unless-stopped
@@ -21,18 +21,12 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_DB: mysql
-      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
-      KC_DB_USERNAME: root
-      KC_DB_PASSWORD: root
     networks:
       - car-rental-network
     command:
       - "start-dev"
     volumes:
-      - keycloak_data:/opt/keycloak/data/
-    depends_on:
-      - mysql
+      - car_rental_keycloak_data:/opt/keycloak/data/
     restart: unless-stopped
 
 networks:
@@ -40,7 +34,7 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data:
+  car_rental_mysql_data:
     driver: local
-  keycloak_data:
+  car_rental_keycloak_data:
     driver: local

@@ -13,53 +13,16 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+    database: mysql
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9090/realms/car_rental
-          jwk-set-uri: http://localhost:9090/realms/car_rental/protocol/openid-connect/certs
-          audience: car-rental-client
-          claims-set-uri: http://localhost:9090/realms/car_rental/protocol/openid-connect/userinfo
-      client:
-        registration:
-          keycloak:
-            client-id: car-rental-client
-            client-secret: your-client-secret
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/swagger-ui/oauth2-redirect.html
-            scope: openid,profile,email,roles
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:9090/realms/car_rental
-            user-name-attribute: preferred_username
-            user-info-uri: http://localhost:9090/realms/car_rental/protocol/openid-connect/userinfo
-            jwk-set-uri: http://localhost:9090/realms/car_rental/protocol/openid-connect/certs
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  web:
-    cors:
-      allowed-origins: http://localhost:4200,http://localhost:8080
-      allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-      allowed-headers: "*"
-      allow-credentials: true
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-    tags-sorter: alpha
-    try-it-out-enabled: true
-    filter: true
-    oauth2-redirect-url: http://localhost:8080/swagger-ui/oauth2-redirect.html
-  api-docs:
-    path: /v3/api-docs
-  show-actuator: true
-  packages-to-scan: com.levanminh.car_rental.controller
-  security:
-    enabled: true
-    basic:
-      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+

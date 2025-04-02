@@ -48,12 +48,12 @@ public class RentalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createRental(
+    public ResponseEntity<Rental> createRental(
             @Parameter(description = "ID của xe") @RequestParam Long carId,
             @Parameter(description = "ID của khách hàng") @RequestParam Long customerId,
             @Parameter(description = "Ngày giờ bắt đầu thuê") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @Parameter(description = "Ngày giờ kết thúc thuê") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
-        rentalService.createRental(carId, customerId, startDate, endDate);
+        return ResponseEntity.ok(rentalService.createRental(carId, customerId, startDate, endDate));
     }
 
     @PatchMapping("/{id}/status")

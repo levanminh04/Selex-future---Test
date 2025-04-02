@@ -1,0 +1,46 @@
+services:
+  mysql:
+    container_name: mysql-car-rental
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: car_rental
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - car-rental-network
+    restart: unless-stopped
+
+  keycloak:
+    container_name: keycloak-car-rental
+    image: quay.io/keycloak/keycloak:26.0.0
+    ports:
+      - "9090:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: mysql
+      KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: root
+    networks:
+      - car-rental-network
+    command:
+      - "start-dev"
+    volumes:
+      - keycloak_data:/opt/keycloak/data/
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+networks:
+  car-rental-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  keycloak_data:
+    driver: local
